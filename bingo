@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sentence Bingo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .bingo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .bingo-cell {
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 14px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      word-wrap: break-word;
+    }
+    .bingo-cell.clicked {
+      background-color: #4caf50;
+      color: white;
+    }
+    .header {
+      font-weight: bold;
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sentence Bingo</h1>
+  <div class="bingo-grid" id="bingoGrid"></div>
+
+  <script>
+    const phrases = [
+      "The quick brown fox",
+      "Jumps over the lazy dog",
+      "To be or not to be",
+      "A stitch in time saves nine",
+      "All that glitters is not gold",
+      "Practice makes perfect",
+      "Better late than never",
+      "Bite the bullet",
+      "Break the ice",
+      "Call it a day",
+      "Hit the sack",
+      "Let the cat out of the bag",
+      "Miss the boat",
+      "Once in a blue moon",
+      "Piece of cake",
+      "Speak of the devil",
+      "Time flies when you're having fun",
+      "Under the weather",
+      "You can say that again",
+      "No pain, no gain",
+      "Cutting corners",
+      "Getting out of hand",
+      "Hang in there",
+      "On thin ice"
+    ];
+
+    const grid = document.getElementById('bingoGrid');
+
+    const shuffled = phrases.sort(() => Math.random() - 0.5);
+    let i = 0;
+
+    // Create Bingo Header
+    ['B', 'I', 'N', 'G', 'O'].forEach(letter => {
+      const cell = document.createElement('div');
+      cell.className = 'bingo-cell header';
+      cell.textContent = letter;
+      grid.appendChild(cell);
+    });
+
+    for (let row = 0; row < 5; row++) {
+      for (let col = 0; col < 5; col++) {
+        const cell = document.createElement('div');
+        cell.className = 'bingo-cell';
+
+        if (row === 2 && col === 2) {
+          cell.textContent = 'FREE';
+          cell.classList.add('clicked');
+        } else {
+          cell.textContent = shuffled[i++];
+        }
+
+        cell.addEventListener('click', () => {
+          cell.classList.toggle('clicked');
+        });
+
+        grid.appendChild(cell);
+      }
+    }
+  </script>
+</body>
+</html>
